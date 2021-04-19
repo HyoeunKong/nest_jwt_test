@@ -18,7 +18,7 @@ export class AppController {
   async login(@Request() req) {
     return this.authService.login({
       userId: req.user.id,
-      userName: req.user.username,
+      userName: req.user.userName,
     });
     // 1.return await this.authService.validateUser('naveen', '1234');
     //2. return req.user;
