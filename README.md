@@ -15,3 +15,38 @@ passport-local 패키지 설치
 npm install-@ nestjs / passport passport passport-local 저장
 npm install --save-dev @ types / passport-local
 ```
+
+## JWT
+- 사용자를 인증하기 위해 액세스 토큰 생성
+- 사용자 정보를 포함하는 암호화된 문자열
+
+```bash
+npm install --save @nestjs/jwt
+```
+
+src/auth/auth.module.ts
+
+```typescript
+import { Module } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { UsersModule } from '../users/users.module';
+import { PassportModule } from '@nestjs/passport';
+import { LocalStrategy } from './local.strategy';
+import {JwtModule} from '@nestjs/jwt';
+ 
+@Module({
+  imports: [UsersModule, PassportModule,
+  JwtModule.register({
+    secret: "My Secret Never let outsiders",
+    signOptions:{
+      expiresIn: '60s'
+    }
+  })],
+  providers: [AuthService, LocalStrategy],
+  exports:[AuthService]
+})
+export class AuthModule {}
+```
+
+secret:JWT 토큰을 암호화 하기위한 값, 실제 서비스에서는 하드코딩금지
+expiresIn: 토큰의 만료 시간
