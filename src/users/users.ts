@@ -12,4 +12,10 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({ nullable: true })
+  refreshtoken?: string;
+
+  @Column({ nullable: true })
+  refreshtokenexpires?: string;
 }

@@ -23,4 +23,14 @@ export class AppController {
     // 1.return await this.authService.validateUser('naveen', '1234');
     //2. return req.user;
   }
+
+  @UseGuards(AuthGuard('jwt-refreshtoken'))
+  @Post('auth/refreshtoken')
+  async refreshToken(@Request() req) {
+    console.log(req.user);
+    return await this.authService.login({
+      userId: req.user.userId,
+      userName: req.user.username,
+    });
+  }
 }
